@@ -3,7 +3,7 @@
 A tracker for medications and rehab exercises. Add what you take or do, check
 it off each day, and watch the streaks build.
 
-**Live app:** _(add your GitHub Pages link here after the first deploy)_
+**Live app:** <https://sabrinashehreen-prog.github.io/Daily-Dose-Tracker/>
 
 Built with plain HTML, CSS and JavaScript. No framework, no build step, no
 server, no account.
