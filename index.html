@@ -4,13 +4,89 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Daily Dose</title>
+  <meta name="description" content="Track medication and rehab exercise adherence, day by day. Works offline.">
+  <link rel="icon" href="icons/icon-192.png">
+
+  <!-- PWA: tells the phone this is installable, and how it should look. -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#171c28">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Daily Dose">
+
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Daily Dose</h1>
-  <p>Hello! If you can read this, index.html is working.</p>
+  <main class="wrap">
 
-  <!-- storage.js loads first, because app.js will use its functions later -->
+    <header class="masthead">
+      <h1>Daily Dose</h1>
+      <p class="date-pill" id="date-pill"></p>
+    </header>
+
+    <!-- Today's overall progress. Filled in by renderProgress(). -->
+    <section class="progress-card">
+      <div class="progress-top">
+        <p class="encourage" id="encourage"></p>
+        <p class="progress-count" id="progress-count"></p>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </section>
+
+    <!-- One section per time of day, built by renderItems(). -->
+    <div id="list"></div>
+
+    <button type="button" class="add-toggle" id="add-toggle">+ Add medication or exercise</button>
+
+    <form id="entry-form" class="entry-form" hidden>
+      <label>Name
+        <input id="name" type="text" placeholder="paracetamol" required>
+      </label>
+
+      <label>Dose
+        <input id="dose" type="text" placeholder="10 mg" required>
+      </label>
+
+      <label>Type
+        <select id="type">
+          <option value="medicine">Medicine</option>
+          <option value="exercise">Exercise</option>
+        </select>
+      </label>
+
+      <label>Time of day
+        <select id="timeOfDay">
+          <option value="morning">Morning</option>
+          <option value="afternoon">Afternoon</option>
+          <option value="evening">Evening</option>
+          <option value="night">Night</option>
+        </select>
+      </label>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Add</button>
+        <button type="button" class="btn-ghost" id="cancel-add">Cancel</button>
+      </div>
+    </form>
+
+
+    <!-- Backup. Everything is stored in this browser only, and a browser can
+         clear that storage at any time, so people need a copy they own. -->
+    <section class="backup">
+      <p class="backup-note">Your history is saved in this browser only. Export a backup now and then.</p>
+      <div class="backup-actions">
+        <button type="button" class="link" id="export-btn">↓ Export backup</button>
+        <button type="button" class="link" id="import-btn">↑ Import backup</button>
+        <input type="file" id="import-file" accept="application/json,.json" hidden>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- storage.js loads first, because app.js uses its functions. -->
   <script src="storage.js"></script>
   <script src="app.js"></script>
 </body>
